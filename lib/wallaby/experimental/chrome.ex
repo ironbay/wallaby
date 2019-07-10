@@ -88,7 +88,7 @@ defmodule Wallaby.Experimental.Chrome do
     create_session_fn = Keyword.get(opts, :create_session_fn, &WebdriverClient.create_session/2)
 
     user_agent =
-      user_agent()
+      user_agent(opts)
       |> Metadata.append(opts[:metadata])
 
     capabilities = capabilities(user_agent: user_agent)
@@ -207,8 +207,8 @@ defmodule Wallaby.Experimental.Chrome do
   defdelegate log(session_or_element), to: WebdriverClient
 
   @doc false
-  def user_agent do
-    "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
+  def user_agent(opts) do
+    opts[:user_agent] || "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
   end
 
   defp capabilities(opts) do
